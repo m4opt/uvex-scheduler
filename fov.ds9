@@ -1,0 +1,4 @@
+# Region file format: DS9 astropy/regions
+global text={UVEX field of view}
+icrs
+box(0.00000000,0.00000000,3.50000000,3.50000000,0.00000000)

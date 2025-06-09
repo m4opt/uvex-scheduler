@@ -1,0 +1,4 @@
+# Region file format: DS9 astropy/regions
+global text={Circle inscribed within UVEX field of view}
+icrs
+circle(0.00000000,0.00000000,1.75000000)
