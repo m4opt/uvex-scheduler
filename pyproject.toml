@@ -7,5 +7,5 @@ requires-python = ">=3.11, <3.12"
 dependencies = [
     "ipykernel",
     "ipywidgets",
-    "m4opt >= 2.0.0",
+    "m4opt>=2.0.1",
 ]
