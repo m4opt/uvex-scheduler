@@ -1,4 +1,5 @@
 # Region file format: DS9 astropy/regions
+# Based on email forward from Hien Minh Nguyen by Daniel Weisz to Leo Singer on 2026-02-06
 icrs
 polygon(267., 35., 271., 45., 108.25, 45., 112.5, 35.) # text={NGC A}
 polygon(254., 15., 253., 12., 245.5, 0., 232.5, 2., 235., 7., 230., 12., 225., 15.) # text={NGC B}
