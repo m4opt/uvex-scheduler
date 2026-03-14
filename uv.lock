@@ -2,17 +2,25 @@ version = 1
 revision = 3
 requires-python = ">=3.11, <3.13"
 resolution-markers = [
-    "sys_platform == 'win32'",
-    "sys_platform == 'emscripten'",
-    "sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version >= '3.12' and sys_platform == 'win32'",
+    "python_full_version < '3.12' and sys_platform == 'win32'",
+    "python_full_version >= '3.12' and sys_platform == 'emscripten'",
+    "python_full_version < '3.12' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'",
 ]
 
 [[package]]
 name = "aep8"
 version = "0.3.0"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.12' and sys_platform == 'win32'",
+    "python_full_version < '3.12' and sys_platform == 'emscripten'",
+    "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+]
 dependencies = [
-    { name = "astropy" },
+    { name = "astropy", marker = "python_full_version < '3.12'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/66/6f/ff53260f39a0a4bca50db7350d9eab0b95ebb15803c9a00c9e220b24bddb/aep8-0.3.0.tar.gz", hash = "sha256:5b703774e8cfa420046a57bb8966f0ac8f4bfae35aab03cb7ea7cbfd5fa29bc0", size = 265387, upload-time = "2025-12-31T19:48:57.35Z" }
 wheels = [
@@ -30,6 +38,29 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/b0/df/e96eba9ba5ffe664bf5f9a85cc41d615a018b2de7768a5af15d41b7c57cc/aep8-0.3.0-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:5428a3334aedbdb85ad39f3944d4dec5be4ef26a3d975c9a381ecd873a29842a", size = 1004523, upload-time = "2025-12-31T19:48:21.985Z" },
     { url = "https://files.pythonhosted.org/packages/6f/b0/fffdfd6af7eff09361a141b6e013b521c8149b1ac90d3e338abe2053bd1b/aep8-0.3.0-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:b04bdc95f4f5c262cf67b853ccff2d6f84013518c17d5b5563e9103f28441f2b", size = 1881568, upload-time = "2025-12-31T19:48:23.695Z" },
     { url = "https://files.pythonhosted.org/packages/f8/95/b80fca594d9da018651c60a15128c6f52b71f41ab3a6658d3a1df08d77e9/aep8-0.3.0-cp312-cp312-win_amd64.whl", hash = "sha256:86dcba488628c5b56e6c8caccff1421dfe7b19f282df349a8872a1673a0570d4", size = 1879262, upload-time = "2025-12-31T19:48:24.982Z" },
+]
+
+[[package]]
+name = "aep8"
+version = "1.0.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12' and sys_platform == 'win32'",
+    "python_full_version >= '3.12' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+]
+dependencies = [
+    { name = "astropy", marker = "python_full_version >= '3.12'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1d/8b/5276e66fa07d5a13813e6a0d549297496da54755bdd996ab9abbb69af7d5/aep8-1.0.0.tar.gz", hash = "sha256:7ef52427b1425824205047cb5abf55a24617c63060cf3ee51c75d019dd6428d2", size = 305200, upload-time = "2026-03-07T02:46:12.738Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ce/74/654535ea85a56522c576ba595420d75fb9bdc56d05b4ba1978b992fdea95/aep8-1.0.0-cp311-abi3-macosx_14_0_arm64.whl", hash = "sha256:eb50ed6e4a22fec0ff3ecf45f33a5ddac938ea970ca680e0d117b1eec8e0df8b", size = 1163674, upload-time = "2026-03-07T02:45:52.109Z" },
+    { url = "https://files.pythonhosted.org/packages/9a/8f/30b53fdba8abea61eba1fd3b0ba82d61d79d5949b8f46f1e2db281294d80/aep8-1.0.0-cp311-abi3-macosx_15_0_x86_64.whl", hash = "sha256:16b8cd250b517d28a398d3e455a63089316a13aef8ad96aa56f5ef5999101c67", size = 1861736, upload-time = "2026-03-07T02:45:53.91Z" },
+    { url = "https://files.pythonhosted.org/packages/fb/c5/9d32edafd670a781e4828055168859968f91d274aa815dc618e376ffc02f/aep8-1.0.0-cp311-abi3-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:45b6ee306b91a8caf89041596f953c84685053633802d7799582510a66b1c482", size = 844050, upload-time = "2026-03-07T02:45:55.39Z" },
+    { url = "https://files.pythonhosted.org/packages/6b/83/91c9c4b5f625c2734bc00abfcb660f7dc92d3e483edcd48b2e7541f04044/aep8-1.0.0-cp311-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:2395f8f940cf117471ac62d3d649b6fb8ae498a3e208c4c78ae03adb112cde58", size = 1468739, upload-time = "2026-03-07T02:45:56.605Z" },
+    { url = "https://files.pythonhosted.org/packages/d6/35/749a17471164f8d463bfd84b11237702e98c31d8675213e8bb47976327f4/aep8-1.0.0-cp311-abi3-musllinux_1_2_aarch64.whl", hash = "sha256:1d7878078ee4134a043a2c72cf65865ae0c4f6854172e7327dabee0bed33052d", size = 993527, upload-time = "2026-03-07T02:45:58.09Z" },
+    { url = "https://files.pythonhosted.org/packages/f9/78/794e66fd1e8e9fb5dddce356c2f017b5abb75c67d4fca73e794cd8802b8a/aep8-1.0.0-cp311-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:cdbb087beb999f819d593055253707c97b1d6eb26c14562e39e7e8354e2784cb", size = 1870412, upload-time = "2026-03-07T02:45:59.7Z" },
+    { url = "https://files.pythonhosted.org/packages/80/4d/6547cca73f42e3ec6ec931fe3c4a35f456e5791bc0a3881f892c5018cbb3/aep8-1.0.0-cp311-abi3-win_amd64.whl", hash = "sha256:df1dff9075f680ea885b73b5011aecb815385b35068f0bf9c8f0913ab67f662c", size = 1869402, upload-time = "2026-03-07T02:46:01.004Z" },
 ]
 
 [[package]]
@@ -517,11 +548,31 @@ wheels = [
 name = "dust-extinction"
 version = "1.6"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.12' and sys_platform == 'win32'",
+    "python_full_version < '3.12' and sys_platform == 'emscripten'",
+    "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+]
 dependencies = [
-    { name = "astropy" },
-    { name = "scipy" },
+    { name = "astropy", marker = "python_full_version < '3.12'" },
+    { name = "scipy", marker = "python_full_version < '3.12'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/22/70/f59fc53732c96143908a6f90293dcd9fc1a139b38e799a803f723d6cc9b1/dust_extinction-1.6.tar.gz", hash = "sha256:055b724412cf166816339dd39ece7cb01759f29d93cf21f628f6c744a6b82a06", size = 3803492, upload-time = "2025-08-08T21:17:54.837Z" }
+
+[[package]]
+name = "dust-extinction"
+version = "1.7"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12' and sys_platform == 'win32'",
+    "python_full_version >= '3.12' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+]
+dependencies = [
+    { name = "astropy", marker = "python_full_version >= '3.12'" },
+    { name = "scipy", marker = "python_full_version >= '3.12'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e9/aa/750cf152780c6b31efc7bf02e90935d12ce0fbf1d3860752df29de84170f/dust_extinction-1.7.tar.gz", hash = "sha256:c421eafc44c622e82e9a122ed444c01f0909434c7462b04715e180723aa81064", size = 5344457, upload-time = "2026-02-06T20:29:40.154Z" }
 
 [[package]]
 name = "dustmaps"
@@ -1167,35 +1218,79 @@ wheels = [
 name = "m4opt"
 version = "2.3.1"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.12' and sys_platform == 'win32'",
+    "python_full_version < '3.12' and sys_platform == 'emscripten'",
+    "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+]
 dependencies = [
-    { name = "aep8" },
-    { name = "antiprism-python" },
-    { name = "astropy" },
-    { name = "astropy-healpix" },
-    { name = "astroquery" },
-    { name = "click" },
-    { name = "cplex" },
-    { name = "docplex" },
-    { name = "dust-extinction" },
-    { name = "dustmaps" },
-    { name = "ligo-skymap" },
-    { name = "networkx" },
-    { name = "numpy" },
-    { name = "pymetis" },
-    { name = "regions" },
-    { name = "satellitetle" },
-    { name = "scipy" },
-    { name = "sgp4" },
-    { name = "spiceypy" },
-    { name = "sympy" },
-    { name = "synphot" },
-    { name = "typer" },
+    { name = "aep8", version = "0.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "antiprism-python", marker = "python_full_version < '3.12'" },
+    { name = "astropy", marker = "python_full_version < '3.12'" },
+    { name = "astropy-healpix", marker = "python_full_version < '3.12'" },
+    { name = "astroquery", marker = "python_full_version < '3.12'" },
+    { name = "click", marker = "python_full_version < '3.12'" },
+    { name = "cplex", marker = "python_full_version < '3.12'" },
+    { name = "docplex", marker = "python_full_version < '3.12'" },
+    { name = "dust-extinction", version = "1.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "dustmaps", marker = "python_full_version < '3.12'" },
+    { name = "ligo-skymap", marker = "python_full_version < '3.12'" },
+    { name = "networkx", marker = "python_full_version < '3.12'" },
+    { name = "numpy", marker = "python_full_version < '3.12'" },
+    { name = "pymetis", marker = "python_full_version < '3.12'" },
+    { name = "regions", marker = "python_full_version < '3.12'" },
+    { name = "satellitetle", marker = "python_full_version < '3.12'" },
+    { name = "scipy", marker = "python_full_version < '3.12'" },
+    { name = "sgp4", marker = "python_full_version < '3.12'" },
+    { name = "spiceypy", marker = "python_full_version < '3.12'" },
+    { name = "sympy", marker = "python_full_version < '3.12'" },
+    { name = "synphot", marker = "python_full_version < '3.12'" },
+    { name = "typer", marker = "python_full_version < '3.12'" },
     { name = "typing-extensions", marker = "python_full_version < '3.12'" },
-    { name = "xdg-base-dirs" },
+    { name = "xdg-base-dirs", marker = "python_full_version < '3.12'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/13/41/d4a11b6380e5a3368c9250ed3b447bd4f2568d9c8b13aeb079a5c6d4ec3a/m4opt-2.3.1.tar.gz", hash = "sha256:93fcfc00e32fef53827506d5c98377abb3514d062e38c82c03af24b90b3f6d7b", size = 1254284, upload-time = "2026-01-23T18:51:35.291Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/eb/96/970b00225abfadca3247cab26e25e85a6726d0b8bddedac22d5e50f2ab05/m4opt-2.3.1-py3-none-any.whl", hash = "sha256:9a3d715099dab1ead894a562360ba8cc87f6a7f68ac175f6cbf3a3b09c5ac49a", size = 1278178, upload-time = "2026-01-23T18:51:33.353Z" },
+]
+
+[[package]]
+name = "m4opt"
+version = "2.4.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12' and sys_platform == 'win32'",
+    "python_full_version >= '3.12' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+]
+dependencies = [
+    { name = "aep8", version = "1.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "antiprism-python", marker = "python_full_version >= '3.12'" },
+    { name = "astropy", marker = "python_full_version >= '3.12'" },
+    { name = "astropy-healpix", marker = "python_full_version >= '3.12'" },
+    { name = "astroquery", marker = "python_full_version >= '3.12'" },
+    { name = "click", marker = "python_full_version >= '3.12'" },
+    { name = "cplex", marker = "python_full_version >= '3.12'" },
+    { name = "docplex", marker = "python_full_version >= '3.12'" },
+    { name = "dust-extinction", version = "1.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "dustmaps", marker = "python_full_version >= '3.12'" },
+    { name = "ligo-skymap", marker = "python_full_version >= '3.12'" },
+    { name = "networkx", marker = "python_full_version >= '3.12'" },
+    { name = "numpy", marker = "python_full_version >= '3.12'" },
+    { name = "pymetis", marker = "python_full_version >= '3.12'" },
+    { name = "regions", marker = "python_full_version >= '3.12'" },
+    { name = "satellitetle", marker = "python_full_version >= '3.12'" },
+    { name = "scipy", marker = "python_full_version >= '3.12'" },
+    { name = "sgp4", marker = "python_full_version >= '3.12'" },
+    { name = "spiceypy", marker = "python_full_version >= '3.12'" },
+    { name = "sympy", marker = "python_full_version >= '3.12'" },
+    { name = "synphot", marker = "python_full_version >= '3.12'" },
+    { name = "typer", marker = "python_full_version >= '3.12'" },
+    { name = "xdg-base-dirs", marker = "python_full_version >= '3.12'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ff/f8/06538e9d38df6eb2d9fd19508f646e2f38a8f8a7297387d652622907e4e7/m4opt-2.4.0.tar.gz", hash = "sha256:b3d478b8193b6d3c161ba9a589bbda42231985ef1b2908a9365bb8319105ef69", size = 1261176, upload-time = "2026-03-07T03:14:09.803Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/46/14/d5800a8d0bb583f28681cc7cb5548a1c64991fb29aeccdd7c04fa784c4f3/m4opt-2.4.0-py3-none-any.whl", hash = "sha256:9f94f6a3471430b1f9323f6d6bc83d7c7ab55b0b6010b20245fdf1a7714442f6", size = 1284790, upload-time = "2026-03-07T03:14:08.167Z" },
 ]
 
 [[package]]
@@ -2248,7 +2343,8 @@ source = { virtual = "." }
 dependencies = [
     { name = "ipykernel" },
     { name = "ipywidgets" },
-    { name = "m4opt" },
+    { name = "m4opt", version = "2.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "m4opt", version = "2.4.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
 ]
 
 [package.metadata]
