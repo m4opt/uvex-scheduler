@@ -1,0 +1,14 @@
+# Region file format: DS9 astropy/regions
+# Based on email forward from Hien Minh Nguyen by Daniel Weisz to Leo Singer on 2026-02-06
+icrs
+point(269.732917 +66.017694) # text={EDF-N}
+point(35.57 -4.82) # text={XMM-LSS}
+point(52.98 -28.12) # text={GOOD-S}
+point(9.45 -44.02) # text={ELAIS-S1}
+point(150.11 +2.23) # text={COSMOS}
+polygon(63.25, -45.67, 65.35, -46.1 66.4 -47.25, 65.99, -48.72, 59.25, -51.19, 56.95, -50.82, 55.9 -49.4 56.8 -47.99) # text={EDF-S}
+point(12h36m44.2700s, +62d14m24.48s) # text={GOODS-N}
+point(14h19m46.0000s, +52d53m37.00s) # text={EGS}
+point(02h17m37.0000s, -05d13m13.41s) # text={UDS}
+point(00h14m18.2800s, -30d22m44.51s) # text={A2744}
+point(17h22m47.8960s, +65d49m21.54s) # text={NEP-TDF}
