@@ -1747,7 +1747,7 @@ wheels = [
 
 [[package]]
 name = "m4opt"
-version = "2.8.0"
+version = "2.8.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aep8" },
@@ -1775,9 +1775,9 @@ dependencies = [
     { name = "typer" },
     { name = "xdg-base-dirs" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/9b/60/bc753981f9c25c48e4f248dd9c4857606bab96e91c7b2188273cb823e536/m4opt-2.8.0.tar.gz", hash = "sha256:23193e03f220c4b3825a10494a50527ed51a27039ad612c6674dd73f5e3404b0", size = 1284251, upload-time = "2026-07-31T18:12:05.898Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a5/9d/6edb13e637217fd2b29c9bfc43772446a7db97d2981c3c0927861f5ff432/m4opt-2.8.1.tar.gz", hash = "sha256:378d3ed7eaca64616d19abd1b41a1358b11697d73071ffc29ddad6ba7b073e65", size = 1284352, upload-time = "2026-07-31T19:58:42.827Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/05/97/5cfb20b03e0d9cc22e2f5cbf3350c6513c7bff004bd8e1e5b38407fe87f2/m4opt-2.8.0-py3-none-any.whl", hash = "sha256:d09c210dfe63c66929502aae6d6b22f032f22a14b712166e45f65a4af6b58d74", size = 1309748, upload-time = "2026-07-31T18:12:03.799Z" },
+    { url = "https://files.pythonhosted.org/packages/c9/1f/3a7351c58b5affaf042f2de85646a829970b1f50c9f99d54d5b3a6e55684/m4opt-2.8.1-py3-none-any.whl", hash = "sha256:c254fbc208ee325ac162a0bb24d638308611e17f1e87f76740ef06ca375acb22", size = 1309798, upload-time = "2026-07-31T19:58:41.257Z" },
 ]
 
 [[package]]
@@ -3410,7 +3410,7 @@ dependencies = [
 requires-dist = [
     { name = "ipywidgets" },
     { name = "jupyterlab" },
-    { name = "m4opt", specifier = ">=2.8.0" },
+    { name = "m4opt", specifier = ">=2.8.1" },
 ]
 
 [[package]]

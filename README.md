@@ -34,7 +34,7 @@ regenerate any affected plots or data files (note, require GNU Make):
 ## Contents
 
 - `notebooks/*.ipynb`: Jupyter notebooks that generate the data files below.
-- `fields.ecsv`: Working field grid and block definitions
+- `tables/fields.ecsv`: Working field grid and block definitions
 - `initial-survey.ecsv`: Reference science timeline for first 100 days
 - `fov/chips.ds9`: Region file for detector footprint accounting for chip gaps
 - `fov/bounding-rectangle.ds9`: Region file for bounding rectangle enclosing all chips
