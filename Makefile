@@ -11,3 +11,6 @@ visualizations/survey-footprints.pdf &: notebooks/survey-footprints.ipynb survey
 
 visualizations/expected-visits.pdf visualizations/skyblocks.pdf tables/fields.ecsv &: notebooks/skyblocks.ipynb fov/inscribed-circle.ds9
 	jupyter execute $<
+
+tables/initial-survey.ecsv: notebooks/main.ipynb tables/fields.ecsv fov/inscribed-circle.ds9
+	jupyter execute $<
