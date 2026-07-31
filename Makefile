@@ -1,6 +1,6 @@
-all: fov/fov.ds9 fov/inscribed-circle.ds9 visualizations/fov.mp4 visualizations/skygrid.mp4 visualizations/coverage-fraction.pdf visualizations/skygrid-overlap.mp4 visualizations/survey-footprints.pdf visualizations/costs.pdf visualizations/skyblocks.pdf fields.ecsv
+all: fov/chips.ds9 fov/bounding-rectangle.ds9 fov/inscribed-circle.ds9 visualizations/fov.pdf visualizations/fov.mp4 visualizations/skygrid.mp4 visualizations/coverage-fraction.pdf visualizations/skygrid-overlap.mp4 visualizations/survey-footprints.pdf visualizations/costs.pdf visualizations/skyblocks.pdf fields.ecsv
 
-fov/fov.ds9 fov/inscribed-circle.ds9 visualizations/fov.mp4 &: notebooks/fov.ipynb
+fov/chips.ds9 fov/bounding-rectangle.ds9 fov/inscribed-circle.ds9 visualizations/fov.pdf visualizations/fov.mp4 &: notebooks/fov.ipynb
 	jupyter execute $<
 
 visualizations/skygrid.mp4 visualizations/coverage-fraction.pdf visualizations/skygrid-overlap.mp4 &: notebooks/skygrid.ipynb fov/inscribed-circle.ds9
