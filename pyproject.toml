@@ -5,6 +5,7 @@ description = "UVEX scheduler notebooks and data products"
 readme = "README.md"
 requires-python = ">=3.12, <3.15"
 dependencies = [
+    "cython>=3.2.9",
     "ipywidgets",
     "jupyterlab",
     "m4opt>=2.8.1",
