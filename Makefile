@@ -1,26 +1,51 @@
-all: fov/chips.ds9 fov/bounding-rectangle.ds9 fov/inscribed-circle.ds9 visualizations/fov.pdf visualizations/fov.mp4 visualizations/skygrid.mp4 visualizations/coverage-fraction.pdf visualizations/skygrid-overlap.mp4 visualizations/survey-footprints.pdf visualizations/expected-visits.pdf visualizations/skyblocks.pdf tables/fields.ecsv visualizations/time-utilization.pdf visualizations/slew-angle-distribution.pdf
+FOV_OUTPUTS = \
+	fov/chips.ds9 \
+	fov/bounding-rectangle.ds9 \
+	fov/inscribed-circle.ds9 \
+	visualizations/fov.pdf \
+	visualizations/fov.mp4
 
-fov/chips.ds9 fov/bounding-rectangle.ds9 fov/inscribed-circle.ds9 visualizations/fov.pdf visualizations/fov.mp4 &: notebooks/fov.ipynb
+SKYGRID_OUTPUTS = \
+	visualizations/skygrid.mp4 \
+	visualizations/coverage-fraction.pdf \
+	visualizations/skygrid-overlap.mp4
+
+SURVEY_FOOTPRINTS_OUTPUTS = \
+	visualizations/survey-footprints.pdf
+
+SKYBLOCKS_OUTPUTS = \
+	visualizations/expected-visits.pdf \
+	visualizations/skyblocks.pdf \
+	tables/fields.ecsv
+
+MAIN_OUTPUTS = \
+	tables/initial-survey.ecsv
+
+REPORT_OUTPUTS = \
+	visualizations/time-utilization.pdf \
+	visualizations/cadence-distribution-2-bins.pdf \
+	visualizations/cadence-distribution-20-bins.pdf \
+	visualizations/cadence-distribution-4-bins.pdf \
+	visualizations/cadence-distribution-40-bins.pdf \
+	visualizations/cadence-distribution-8-bins.pdf \
+	visualizations/slew-angle-distribution.pdf
+
+all: $(FOV_OUTPUTS) $(SKYGRID_OUTPUTS) $(SURVEY_FOOTPRINTS_OUTPUTS) $(SKYBLOCKS_OUTPUTS) $(MAIN_OUTPUTS) $(REPORT_OUTPUTS)
+
+$(FOV_OUTPUTS) &: notebooks/fov.ipynb
 	jupyter execute $<
 
-visualizations/skygrid.mp4 visualizations/coverage-fraction.pdf visualizations/skygrid-overlap.mp4 &: notebooks/skygrid.ipynb fov/bounding-rectangle.ds9 fov/inscribed-circle.ds9
+$(SKYGRID_OUTPUTS) &: notebooks/skygrid.ipynb fov/bounding-rectangle.ds9 fov/inscribed-circle.ds9
 	jupyter execute $<
 
-visualizations/survey-footprints.pdf &: notebooks/survey-footprints.ipynb survey-footprints/lmlz-deep.ds9 survey-footprints/lmlz-wide.ds9 survey-footprints/magellanic-clouds.ds9
+$(SURVEY_FOOTPRINTS_OUTPUTS) &: notebooks/survey-footprints.ipynb survey-footprints/lmlz-deep.ds9 survey-footprints/lmlz-wide.ds9 survey-footprints/magellanic-clouds.ds9
 	jupyter execute $<
 
-visualizations/expected-visits.pdf visualizations/skyblocks.pdf tables/fields.ecsv &: notebooks/skyblocks.ipynb fov/inscribed-circle.ds9
+$(SKYBLOCKS_OUTPUTS) &: notebooks/skyblocks.ipynb fov/inscribed-circle.ds9
 	jupyter execute $<
 
-tables/initial-survey.ecsv: notebooks/main.ipynb tables/fields.ecsv fov/inscribed-circle.ds9
+$(MAIN_OUTPUTS): notebooks/main.ipynb tables/fields.ecsv fov/inscribed-circle.ds9
 	jupyter execute $<
 
-visualizations/time-utilization.pdf \
-visualizations/cadence-distribution-2-bins.pdf \
-visualizations/cadence-distribution-20-bins.pdf \
-visualizations/cadence-distribution-4-bins.pdf \
-visualizations/cadence-distribution-40-bins.pdf \
-visualizations/cadence-distribution-8-bins.pdf \
-visualizations/slew-angle-distribution.pdf \
-&: notebooks/report.ipynb tables/initial-survey.ecsv fov/inscribed-circle.ds9 fov/bounding-rectangle.ds9 fov/chips.ds9
+$(REPORT_OUTPUTS) &: notebooks/report.ipynb tables/initial-survey.ecsv fov/inscribed-circle.ds9 fov/bounding-rectangle.ds9 fov/chips.ds9
 	jupyter execute $<
