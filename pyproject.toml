@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "uvex-scheduler"
 version = "0.1.0"
@@ -9,3 +13,15 @@ dependencies = [
     "jupyterlab",
     "m4opt>=2.11.0",
 ]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+    "pytest-cov",
+]
+
+[tool.setuptools.packages.find]
+include = ["uvex_transient_toolkit*"]
+
+[tool.pytest.ini_options]
+testpaths = ["uvex_transient_toolkit"]
