@@ -1,51 +1,85 @@
-FOV_OUTPUTS = \
-	fov/chips.ds9 \
-	fov/bounding-rectangle.ds9 \
-	fov/inscribed-circle.ds9 \
-	visualizations/fov.pdf \
-	visualizations/fov.mp4
+SURVEY := 3_year_example_survey
 
-SKYGRID_OUTPUTS = \
-	visualizations/skygrid.mp4 \
-	visualizations/coverage-fraction.pdf \
-	visualizations/skygrid-overlap.mp4
+all: $(SURVEY)/fov_plot.png \
+     $(SURVEY)/fov.mp4 \
+     $(SURVEY)/chips.ds9 \
+     $(SURVEY)/bounding-rectangle.ds9 \
+     $(SURVEY)/inscribed-circle.ds9 \
+     $(SURVEY)/reduced-inscribed-circle.ds9 \
+     $(SURVEY)/coverage_multiplicity_histograms.png \
+     $(SURVEY)/fov_coverage_animation.gif \
+     $(SURVEY)/skygrid_params.json \
+     $(SURVEY)/survey-footprints.pdf \
+     $(SURVEY)/expected_visits_map.pdf \
+     $(SURVEY)/block_size_distribution.pdf \
+     $(SURVEY)/block_partition_map.pdf \
+     $(SURVEY)/fields.ecsv \
+     $(SURVEY)/blocks.ecsv \
+     $(SURVEY)/downlinks.ecsv \
+     $(SURVEY)/block_availability.pdf \
+     $(SURVEY)/initial-survey.ecsv \
+     $(SURVEY)/initial-survey.mp4 \
+     $(SURVEY)/time-utilization.pdf \
+     $(SURVEY)/weekly-usage.pdf \
+     $(SURVEY)/visited-fraction.ecsv \
+     $(SURVEY)/visited-area.ecsv \
+     $(SURVEY)/visit-multiplicity.pdf \
+     $(SURVEY)/visited-fraction-cdf.ecsv \
+     $(SURVEY)/visit-multiplicity-cdf.pdf \
+     $(SURVEY)/survey-completeness.ecsv \
+     $(SURVEY)/survey-completeness-over-time.pdf \
+     $(SURVEY)/cadence-histogram.pdf \
+     $(SURVEY)/pair-count-curve.pdf \
+     $(SURVEY)/slew-duration-distribution.pdf \
+     $(SURVEY)/slew-angle-distribution.pdf
 
-SURVEY_FOOTPRINTS_OUTPUTS = \
-	visualizations/survey-footprints.pdf
-
-SKYBLOCKS_OUTPUTS = \
-	visualizations/expected-visits.pdf \
-	visualizations/skyblocks.pdf \
-	tables/fields.ecsv
-
-MAIN_OUTPUTS = \
-	tables/initial-survey.ecsv
-
-REPORT_OUTPUTS = \
-	visualizations/time-utilization.pdf \
-	visualizations/cadence-distribution-2-bins.pdf \
-	visualizations/cadence-distribution-20-bins.pdf \
-	visualizations/cadence-distribution-4-bins.pdf \
-	visualizations/cadence-distribution-40-bins.pdf \
-	visualizations/cadence-distribution-8-bins.pdf \
-	visualizations/slew-angle-distribution.pdf
-
-all: $(FOV_OUTPUTS) $(SKYGRID_OUTPUTS) $(SURVEY_FOOTPRINTS_OUTPUTS) $(SKYBLOCKS_OUTPUTS) $(MAIN_OUTPUTS) $(REPORT_OUTPUTS)
-
-$(FOV_OUTPUTS) &: notebooks/fov.ipynb
+$(SURVEY)/fov_plot.png \
+$(SURVEY)/fov.mp4 \
+$(SURVEY)/chips.ds9 \
+$(SURVEY)/bounding-rectangle.ds9 \
+$(SURVEY)/inscribed-circle.ds9 \
+$(SURVEY)/reduced-inscribed-circle.ds9 &: notebooks/fov.ipynb
 	jupyter execute $<
 
-$(SKYGRID_OUTPUTS) &: notebooks/skygrid.ipynb fov/bounding-rectangle.ds9 fov/inscribed-circle.ds9
+$(SURVEY)/coverage_multiplicity_histograms.png \
+$(SURVEY)/fov_coverage_animation.gif \
+$(SURVEY)/skygrid_params.json &: notebooks/skygrid.ipynb $(SURVEY)/chips.ds9 $(SURVEY)/inscribed-circle.ds9
 	jupyter execute $<
 
-$(SURVEY_FOOTPRINTS_OUTPUTS) &: notebooks/survey-footprints.ipynb survey-footprints/lmlz-deep.ds9 survey-footprints/lmlz-wide.ds9 survey-footprints/magellanic-clouds.ds9
+$(SURVEY)/survey-footprints.pdf &: notebooks/survey-footprints.ipynb survey-footprints/lmlz-deep.ds9 survey-footprints/lmlz-wide.ds9 survey-footprints/magellanic-clouds.ds9
 	jupyter execute $<
 
-$(SKYBLOCKS_OUTPUTS) &: notebooks/skyblocks.ipynb fov/inscribed-circle.ds9
+$(SURVEY)/expected_visits_map.pdf \
+$(SURVEY)/block_size_distribution.pdf \
+$(SURVEY)/block_partition_map.pdf \
+$(SURVEY)/fields.ecsv \
+$(SURVEY)/blocks.ecsv &: notebooks/skyblocks.ipynb $(SURVEY)/chips.ds9 $(SURVEY)/inscribed-circle.ds9 $(SURVEY)/skygrid_params.json
 	jupyter execute $<
 
-$(MAIN_OUTPUTS): notebooks/main.ipynb tables/fields.ecsv fov/inscribed-circle.ds9
+$(SURVEY)/downlinks.ecsv \
+$(SURVEY)/block_availability.pdf \
+$(SURVEY)/initial-survey.ecsv \
+$(SURVEY)/initial-survey.mp4 &: notebooks/main.ipynb $(SURVEY)/chips.ds9 $(SURVEY)/inscribed-circle.ds9 $(SURVEY)/fields.ecsv $(SURVEY)/blocks.ecsv
 	jupyter execute $<
 
-$(REPORT_OUTPUTS) &: notebooks/report.ipynb tables/initial-survey.ecsv fov/inscribed-circle.ds9 fov/bounding-rectangle.ds9 fov/chips.ds9
+$(SURVEY)/time-utilization.ecsv \
+$(SURVEY)/time-utilization.pdf \
+$(SURVEY)/weekly-usage.ecsv \
+$(SURVEY)/weekly-usage.pdf \
+$(SURVEY)/visited-fraction.ecsv \
+$(SURVEY)/visited-area.ecsv \
+$(SURVEY)/visit-multiplicity.pdf \
+$(SURVEY)/visited-fraction-cdf.ecsv \
+$(SURVEY)/visit-multiplicity-cdf.pdf \
+$(SURVEY)/survey-completeness.ecsv \
+$(SURVEY)/survey-completeness-over-time.pdf \
+$(SURVEY)/survey-completeness-over-time.ecsv \
+$(SURVEY)/cadence-histogram.ecsv \
+$(SURVEY)/cadence-histogram.pdf \
+$(SURVEY)/pair-count-curve.ecsv \
+$(SURVEY)/pair-count-curve.pdf \
+$(SURVEY)/slew-duration-distribution.pdf \
+$(SURVEY)/slew-duration-distribution.ecsv \
+$(SURVEY)/slew-angle-distribution.pdf \
+$(SURVEY)/slew-angle-distribution.ecsv &: notebooks/report.ipynb $(SURVEY)/initial-survey.ecsv $(SURVEY)/blocks.ecsv $(SURVEY)/bounding-rectangle.ds9 $(SURVEY)/inscribed-circle.ds9
 	jupyter execute $<
