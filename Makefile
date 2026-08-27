@@ -23,6 +23,7 @@ MAIN_OUTPUTS = \
 
 REPORT_OUTPUTS = \
 	visualizations/time-utilization.pdf \
+	visualizations/visit-distribution.pdf \
 	visualizations/cadence-distribution-2-bins.pdf \
 	visualizations/cadence-distribution-20-bins.pdf \
 	visualizations/cadence-distribution-4-bins.pdf \
