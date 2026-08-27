@@ -2,12 +2,15 @@
 This test suite verifies that the model module can plug into the synphot machinery.
 """
 
+from functools import partial
+
 import numpy as np
 import pytest
 from astropy import units as u
 from astropy.time import Time
 
 from m4opt.missions._uvex import uvex
+from uvex_transient_toolkit.dust import log_attenuation
 from uvex_transient_toolkit.models import VanVelzenTDESED, VillarCoolingBlackbodySED
 from m4opt.skygrid import _geodesic
 from m4opt.synphot import observing
@@ -162,3 +165,79 @@ def test_synthetic_photometry_with_dust_extinction():
         SNR = uvex.detector.get_snr(900 * u.s, spectra, "FUV")
 
     assert np.all(SNR >= 0), "All events should have positive SNR in the FUV band."
+
+
+def test_synthetic_photometry_with_batched_dust_extinction():
+    """
+    Per-event dust extinction via `as_source_spectrum`'s `log_attenuation`, fully batched.
+
+    The workaround for `test_synthetic_photometry_with_dust_extinction`'s xfail:
+    rather than multiplying a batched `SourceSpectrum` by a separate
+    `DustExtinction()` `SpectralElement` (which routes through
+    `m4opt.synphot._math.countrate`'s per-Ebv interpolation shortcut, and
+    chokes on a per-event batch axis), `uvex_transient_toolkit.dust.log_attenuation`
+    (bound to each event's own E(B-V) via `functools.partial`) is folded
+    directly into the flux -- as plain NumPy arithmetic inside
+    `as_source_spectrum`'s own evaluation kernel -- before the
+    `SourceSpectrum` is ever built. That keeps the whole thing one ordinary
+    broadcast, so it batches over events exactly as cleanly as every other
+    parameter already does in `test_synthetic_photometry_batches_events_and_times`.
+    """
+    rng = np.random.default_rng(0)
+
+    skygrid = _geodesic.for_subdivision(21, 4, "icosahedron")
+    n_events = len(skygrid)
+
+    model = VanVelzenTDESED()
+
+    parameters = {
+        name: value[:, np.newaxis]
+        for name, value in model.sample_parameters(n_events, rng=rng).items()
+    }
+    # One E(B-V) per event. `dust.log_attenuation` derives its own output
+    # shape from `Ebv`'s shape directly (no manually reserved trailing
+    # axis needed here, unlike `parameters` above), so a flat (n_events,)
+    # array already broadcasts correctly against wavelength.
+    ebv = rng.uniform(0.0, 0.3, size=n_events)
+
+    time_since_explosion = 10 * u.day
+    obstime = Time("2025-01-01T00:00:00", scale="utc")
+    redshift = 0.05
+
+    spectra_with_dust = model.as_source_spectrum(
+        time_since_explosion,
+        redshift=redshift,
+        log_attenuation=partial(log_attenuation, Ebv=ebv),
+        **parameters,
+    )
+    spectra_without_dust = model.as_source_spectrum(
+        time_since_explosion, redshift=redshift, **parameters
+    )
+
+    with observing(uvex.observer_location(obstime), skygrid, obstime):
+        snr_with_dust = uvex.detector.get_snr(900 * u.s, spectra_with_dust, "FUV")
+        snr_without_dust = uvex.detector.get_snr(
+            900 * u.s, spectra_without_dust, "FUV"
+        )
+
+    assert snr_with_dust.shape == (n_events,)
+    assert np.all(np.isfinite(snr_with_dust))
+    assert np.all(snr_with_dust >= 0)
+    # Every event has EBV > 0, so extinction should only ever suppress flux.
+    assert np.all(snr_with_dust <= snr_without_dust)
+
+    # Cross-check one event/wavelength slot against a manual, unbatched
+    # computation, the same way `test_synthetic_photometry_batches_events_and_times`
+    # confirms broadcasting actually lines up event slots with the right values.
+    i_event, i_freq = 3, 5
+    wave = uvex.detector.bandpasses["FUV"].waveset
+    scalar_params = {name: value[i_event, 0] for name, value in parameters.items()}
+    scalar_spectrum = VanVelzenTDESED().as_source_spectrum(
+        time_since_explosion,
+        redshift=redshift,
+        log_attenuation=partial(log_attenuation, Ebv=ebv[i_event]),
+        **scalar_params,
+    )
+    expected = scalar_spectrum(wave[i_freq])
+    actual = spectra_with_dust(wave)[i_event, i_freq]
+    np.testing.assert_allclose(actual.value, expected.value, rtol=1e-6)

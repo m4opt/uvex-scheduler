@@ -36,7 +36,7 @@ combines one of each into a full :class:`SpectralModel`, with
 """
 
 from abc import ABC, abstractmethod
-from collections.abc import Iterator, Mapping
+from collections.abc import Callable, Iterator, Mapping
 from copy import copy, deepcopy
 from typing import ClassVar, Self
 
@@ -46,9 +46,8 @@ from astropy.cosmology import FLRW
 from astropy.modeling import Model
 from astropy.units import Quantity
 from scipy.integrate import quad_vec
-from synphot import SourceSpectrum
+from synphot import SourceSpectrum, SpectralElement
 from synphot import units as synphot_units
-
 from .._cosmology import resolve_cosmological_distances
 from .._typing import (
     CGSParameterValue,
@@ -1543,6 +1542,7 @@ class SpectralModel(_ModelBase):
         angular_diameter_distance: Quantity | None = None,
         proper_distance: Quantity | None = None,
         cosmology: FLRW | None = None,
+        log_attenuation: Callable[[Quantity], FloatArray] | None = None,
         **parameters: ParameterValue,
     ) -> SourceSpectrum:
         r"""
@@ -1564,11 +1564,39 @@ class SpectralModel(_ModelBase):
         ``redshift``/the distance keywords -- since a
         :class:`~synphot.SourceSpectrum` is meant to be a real per-area
         flux for :class:`~m4opt.synphot.Detector` to consume, not a
-        rest-frame luminosity. This does not apply any foreground
-        attenuation (e.g. Milky Way dust) -- multiply the returned
-        :class:`~synphot.SourceSpectrum` by a separate extinction spectral
-        element for that, as :class:`~m4opt.synphot.extinction.DustExtinction`
-        does.
+        rest-frame luminosity.
+
+        Foreground (e.g. Milky Way) dust attenuation is optional and, if
+        wanted, applied here rather than through :mod:`synphot`'s own
+        spectrum-composition operators (``spectrum * extinction``): pass
+        ``log_attenuation``, a callable evaluated on this wavelength grid
+        (as a proper :class:`~astropy.units.Quantity`, so unit conversion is
+        never ambiguous) and multiplied into the native photon flux, inside
+        this method's own evaluation kernel, before the result is wrapped
+        as a :class:`~synphot.SourceSpectrum`. Doing it here rather than by
+        composing two :class:`~astropy.modeling.Model` instances is what
+        lets ``E(B-V)`` stay vector-valued (e.g. one row per event) without
+        resurrecting :mod:`synphot`'s ``n_models=1`` restriction, exactly
+        like every other parameter here (see
+        :func:`~uvex_transient_toolkit.models._utils.model_class_from_kernel`)
+        -- the attenuation is just one more array multiplied in via plain
+        NumPy broadcasting, not a second composed model.
+
+        :func:`~uvex_transient_toolkit.dust.log_attenuation` matches this
+        contract already, given an already-resolved E(B-V) (see
+        :func:`~uvex_transient_toolkit.dust.resolve_ebv` for turning a dust
+        map and sky position into one, as a separate prior step); bind it
+        with :func:`functools.partial` (or a small lambda), e.g.
+        ``log_attenuation=partial(uvex_transient_toolkit.dust.log_attenuation,
+        Ebv=event_ebv)``. Passing a bare reddening-law model such as
+        :class:`dust_extinction.parameter_averages.G23` directly here does
+        *not* work: its bare-float calling convention assumes wavenumbers
+        in inverse microns (not this method's Angstrom), its
+        ``extinguish(x, Av=None, Ebv=None)`` takes :math:`A_V` positionally
+        rather than :math:`E(B-V)`, and it raises outright on wavelengths
+        outside its native range instead of returning ``NaN`` --
+        :func:`~uvex_transient_toolkit.dust.log_attenuation` exists
+        specifically to handle all three correctly.
 
         Parameters
         ----------
@@ -1581,6 +1609,11 @@ class SpectralModel(_ModelBase):
             Exactly one of ``redshift`` or the three distance keywords must
             be given; the rest are derived from it using ``cosmology``. See
             :meth:`as_astropy_model`.
+        log_attenuation
+            ``log_attenuation(wave) -> ln(transmission)``: a callable giving
+            the natural log of the dimensionless foreground transmission at
+            each wavelength in ``wave`` (a :class:`~astropy.units.Quantity`
+            in Angstrom). ``None`` (the default) applies no attenuation.
         **parameters
             This model's parameter values, either
             :class:`~astropy.units.Quantity` or already unit-stripped cgs
@@ -1626,8 +1659,14 @@ class SpectralModel(_ModelBase):
         )
         t_cgs = to_cgs_value(t)
 
-        def evaluate(wave: FloatArray) -> FloatResult:
-            return model(wave, t_cgs)
+        if log_attenuation is None:
+
+            def evaluate(wave: FloatArray) -> FloatResult:
+                return model(wave, t_cgs)
+        else:
+
+            def evaluate(wave: FloatArray) -> FloatResult:
+                return model(wave, t_cgs) * np.exp(log_attenuation(wave * u.AA))
 
         model_class = model_class_from_kernel(
             "_FixedTimeSourceSpectrumModel",
@@ -2475,6 +2514,65 @@ class SpectralModel(_ModelBase):
                 **cgs_parameters,
             )
             * u.ABmag
+        )
+
+
+    @classmethod
+    def mag_bandpass(
+        cls,
+        bandpass: SpectralElement,
+        t: Quantity,
+        *,
+        redshift: PhysicalInput | None = None,
+        luminosity_distance: Quantity | None = None,
+        angular_diameter_distance: Quantity | None = None,
+        proper_distance: Quantity | None = None,
+        cosmology: FLRW | None = None,
+        log_attenuation: NumericalInput | None = None,
+        **parameters: ParameterValue,
+    ) -> Quantity:
+        """
+        Evaluate the apparent AB magnitude of the flux averaged over `bandpass`.
+
+        Convenience wrapper around :meth:`mag_band` that reads its ``nu`` and
+        ``throughput`` straight off `bandpass` instead of requiring them as
+        separate arguments -- see :meth:`mag_bandpass_cgs`.
+
+        Parameters
+        ----------
+        bandpass
+            The bandpass to average over, e.g. one of an
+            `~m4opt.synphot.Detector`'s own
+            `~m4opt.synphot.Detector.bandpasses`.
+        t
+            Observed time since explosion.
+        redshift, luminosity_distance, angular_diameter_distance, proper_distance, cosmology
+            See :meth:`flux_log`.
+        log_attenuation
+            See :meth:`flux_band_log_cgs`.
+        **parameters
+            This model's parameter values. See :meth:`eval_log_cgs`.
+
+        Returns
+        -------
+        ~astropy.units.Quantity
+            The apparent AB magnitude, as an :attr:`~astropy.units.ABmag` Quantity.
+        """
+        wave = bandpass.waveset
+        nu = wave.to(u.Hz, equivalencies=u.spectral())
+        throughput = bandpass(wave).to_value(u.dimensionless_unscaled)
+
+        return cls.mag_band(
+            nu,
+            throughput,
+            t,
+            redshift=redshift,
+            luminosity_distance=luminosity_distance,
+            angular_diameter_distance=angular_diameter_distance,
+            proper_distance=proper_distance,
+            cosmology=cosmology,
+            log_attenuation=log_attenuation,
+            **parameters,
         )
 
     # -------------------------------------- #

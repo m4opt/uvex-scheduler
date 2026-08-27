@@ -1,13 +1,36 @@
-"""
-RNG utilities for use in the ``uvex_transient_toolkit.models`` package for sampling.
-"""
+import logging
+from typing import Optional, Union
 
 import numpy as np
 from numpy.typing import NDArray
 
+logger = logging.getLogger("uvex_transient_toolkit")
+logger.addHandler(logging.NullHandler())
+
+
+def configure_logging(level: int = logging.DEBUG) -> None:
+    """
+    Attach a console handler to the package logger.
+
+    By default `logger` has only a `~logging.NullHandler` attached (the
+    standard library-friendly setup), so nothing is printed until a
+    consumer -- typically a notebook -- opts in by calling this function.
+
+    Parameters
+    ----------
+    level : int, optional
+        Logging level for both the logger and the console handler
+        (default: `logging.DEBUG`).
+    """
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s", datefmt="%H:%M:%S"))
+
+    logger.addHandler(handler)
+    logger.setLevel(level)
+
 
 def get_rng(
-    rng: np.random.Generator | int | None = None,
+    rng: Optional[Union[np.random.Generator, int]] = None,
 ) -> np.random.Generator:
     """
     Return a NumPy random-number generator.
@@ -63,9 +86,7 @@ def get_rng(
     raise TypeError("`rng` must be a NumPy Generator, an integer seed, or None.")
 
 
-def get_seed_sequence(
-    seed: np.random.SeedSequence | int | None = None,
-) -> np.random.SeedSequence:
+def get_seed_sequence(seed: Optional[Union[np.random.SeedSequence, int]] = None) -> np.random.SeedSequence:
     """
     Return a NumPy `~numpy.random.SeedSequence`.
 
@@ -92,15 +113,13 @@ def get_seed_sequence(
         return np.random.SeedSequence()
 
     if isinstance(seed, bool) or not isinstance(seed, (int, np.integer)):
-        raise TypeError(
-            "`seed` must be a NumPy SeedSequence, an integer seed, or None."
-        )
+        raise TypeError("`seed` must be a NumPy SeedSequence, an integer seed, or None.")
 
     return np.random.SeedSequence(int(seed))
 
 
 def split_root_seed(
-    seed: np.random.SeedSequence | int | None = None,
+    seed: Optional[Union[np.random.SeedSequence, int]] = None,
 ) -> tuple[np.random.Generator, np.random.SeedSequence]:
     """
     Split a root seed into an "immediate draws" generator and a "per-event seeds" spawner.
@@ -162,9 +181,6 @@ def spawn_seeds(spawn_sequence: np.random.SeedSequence, n: int) -> NDArray[np.ui
         ``uint64`` array of shape ``(n,)``.
     """
     return np.array(
-        [
-            child.generate_state(1, dtype=np.uint64)[0]
-            for child in spawn_sequence.spawn(n)
-        ],
+        [child.generate_state(1, dtype=np.uint64)[0] for child in spawn_sequence.spawn(n)],
         dtype=np.uint64,
     )

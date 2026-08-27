@@ -30,7 +30,7 @@ from numpy.typing import NDArray
 from scipy import integrate, stats
 from scipy.stats.sampling import NumericalInversePolynomial
 
-from uvex_transient_toolkit.models._rng import get_rng
+from uvex_transient_toolkit.utils import get_rng
 
 __all__ = [
     "ConstantPrior",
@@ -488,7 +488,7 @@ class Prior(ABC):
         """
         Resolve ``rng`` to a :class:`numpy.random.Generator`.
 
-        Thin wrapper around :func:`uvex_transient_toolkit.models._rng.get_rng`, giving
+        Thin wrapper around :func:`uvex_transient_toolkit.utils.get_rng`, giving
         :meth:`sample` a single, overridable hook for constructing the
         random-number generator.
         """

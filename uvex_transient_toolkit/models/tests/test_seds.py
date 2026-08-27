@@ -12,7 +12,13 @@ actually being checked.
 """
 
 from uvex_transient_toolkit.models.core._base import ComposedSpectralModel, SpectralModel
-from uvex_transient_toolkit.models.supernovae import VillarCoolingBlackbodySED
+from uvex_transient_toolkit.models.supernovae import (
+    TopHatCCSNeSED,
+    TypeIbSNeSED,
+    TypeIcSNeSED,
+    TypeIIPSNeSED,
+    VillarCoolingBlackbodySED,
+)
 from uvex_transient_toolkit.models.tdes import VanVelzenTDESED
 
 from ._contracts import SpectralModelContract, assert_full_coverage
@@ -20,6 +26,22 @@ from ._contracts import SpectralModelContract, assert_full_coverage
 
 class TestVillarCoolingBlackbodySED(SpectralModelContract):
     model_class = VillarCoolingBlackbodySED
+
+
+class TestTypeIbSNeSED(SpectralModelContract):
+    model_class = TypeIbSNeSED
+
+
+class TestTypeIcSNeSED(SpectralModelContract):
+    model_class = TypeIcSNeSED
+
+
+class TestTypeIIPSNeSED(SpectralModelContract):
+    model_class = TypeIIPSNeSED
+
+
+class TestTopHatCCSNeSED(SpectralModelContract):
+    model_class = TopHatCCSNeSED
 
 
 class TestVanVelzenTDESED(SpectralModelContract):

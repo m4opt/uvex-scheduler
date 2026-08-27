@@ -1,7 +1,8 @@
 __all__ = [
-    'models'
+    "models",
 ]
 
 from . import models
-from models import *
+from .models import *
+
 __all__.extend(models.__all__)

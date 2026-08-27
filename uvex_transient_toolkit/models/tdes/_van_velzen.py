@@ -5,7 +5,7 @@ Composite tidal disruption event SED, following :footcite:t:`2021ApJ...908....4V
 from typing import ClassVar
 
 from astropy import units as u
-
+import numpy as np
 from uvex_transient_toolkit.models.core._base import ComposedSpectralModel
 from uvex_transient_toolkit.models.core._parameters import Parameter
 from uvex_transient_toolkit.models.core.priors import NormalPrior
@@ -88,28 +88,28 @@ class VanVelzenTDESED(ComposedSpectralModel):
     _SPECTRUM_CLASS = BlackbodySpectrum
     _DEFAULT_PARAMETERS: ClassVar[dict[str, Parameter]] = {
         "amplitude": Parameter(
-            prior=NormalPrior(mean=44.0, sigma=0.2),
+            prior=NormalPrior(mean=43.8, sigma=0.2),
             scale=1.0 * u.erg / u.s,
             transform="log10",
             description="Peak bolometric luminosity, L_0 = L_bol(t_peak). log10(L_0/[erg/s]) ~ N(44, 0.2^2).",
             latex=r"L_0",
         ),
         "temperature": Parameter(
-            prior=NormalPrior(mean=4.3, sigma=0.12),
+            prior=NormalPrior(mean=4.3, sigma=0.1),
             scale=1.0 * u.K,
             transform="log10",
             description="Photospheric blackbody temperature. log10(T/K) ~ N(4.3, 0.12^2).",
             latex=r"T",
         ),
         "sigma_rise": Parameter(
-            prior=NormalPrior(mean=1.0, sigma=0.22),
+            prior=NormalPrior(mean=1.3, sigma=0.3),
             scale=1.0 * u.day,
             transform="log10",
             description="Gaussian width of the pre-peak rise. log10(sigma/day) ~ N(1.0, 0.22^2).",
             latex=r"\sigma",
         ),
         "tau_decline": Parameter(
-            prior=NormalPrior(mean=1.7, sigma=0.2),
+            prior=NormalPrior(mean=2, sigma=0.1),
             scale=1.0 * u.day,
             transform="log10",
             description="Exponential decline timescale after peak. log10(tau/day) ~ N(1.7, 0.2^2).",
