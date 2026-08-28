@@ -14,6 +14,7 @@ from uvex_transient_toolkit.models.lightcurves import (
     DelayedExponentialLightcurve,
     FREDLightcurve,
     GaussianPulseLightcurve,
+    GaussianRisePowerLawLightcurve,
     GREDLightcurve,
     LogNormalPulseLightcurve,
     PlateauPowerLawLightcurve,
@@ -40,6 +41,10 @@ class TestFREDLightcurve(LightcurveContract):
 
 class TestGREDLightcurve(LightcurveContract):
     model_class = GREDLightcurve
+
+
+class TestGaussianRisePowerLawLightcurve(LightcurveContract):
+    model_class = GaussianRisePowerLawLightcurve
 
 
 class TestBazinLightcurve(LightcurveContract):

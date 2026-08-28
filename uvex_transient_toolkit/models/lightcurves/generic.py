@@ -16,6 +16,7 @@ __all__ = [
     "FREDLightcurve",
     "GREDLightcurve",
     "GaussianPulseLightcurve",
+    "GaussianRisePowerLawLightcurve",
     "LogNormalPulseLightcurve",
     "PlateauPowerLawLightcurve",
     "PowerLawLightcurve",
@@ -304,6 +305,111 @@ class GREDLightcurve(Lightcurve):
         log_decline = -(t - t_peak) / tau_decline
 
         return np.log(amplitude) + np.where(is_rising, log_rise, log_decline)
+
+
+class GaussianRisePowerLawLightcurve(Lightcurve):
+    r"""
+    A Gaussian rise followed by a power-law decline, peaked at ``t_peak``.
+
+    .. math::
+
+        L(t) = A \times \begin{cases}
+            \exp\left(-\dfrac{(t - t_\mathrm{peak})^2}{2\sigma_\mathrm{rise}^2}\right)
+                & t \le t_\mathrm{peak} \\[4pt]
+            \left(\dfrac{t}{t_\mathrm{peak}}\right)^{-\alpha_\mathrm{decline}}
+                & t > t_\mathrm{peak}
+        \end{cases}
+
+    The two branches agree exactly at :math:`t = t_\mathrm{peak}`, where
+    :math:`L(t_\mathrm{peak}) = A` -- the power-law branch is referenced to
+    :math:`t_\mathrm{peak}` rather than :math:`t = 0` for exactly this
+    reason. Unlike `GREDLightcurve`'s exponential cutoff, the power-law tail
+    here (:math:`L \propto t^{-\alpha_\mathrm{decline}}` for :math:`t \gg
+    t_\mathrm{peak}`) fades slowly at late times -- the qualitative
+    late-time behavior of transients with an extended power source (e.g.
+    luminous fast blue optical transients) rather than a sharply cut-off
+    pulse.
+
+    Unlike `GREDLightcurve`, ``t_peak`` is an independent free parameter
+    here rather than fixed at :math:`5\sigma_\mathrm{rise}`.
+
+    .. rubric:: Parameters
+
+    The light curve parameters are summarized below.
+
+    .. list-table::
+       :header-rows: 1
+       :widths: 18 18 64
+
+       * - Parameter
+         - Symbol
+         - Description
+       * - ``amplitude``
+         - :math:`A`
+         - Peak bolometric luminosity.
+       * - ``t_peak``
+         - :math:`t_\mathrm{peak}`
+         - Time of peak luminosity since explosion.
+       * - ``sigma_rise``
+         - :math:`\sigma_\mathrm{rise}`
+         - Gaussian width of the rise.
+       * - ``decline_index``
+         - :math:`\alpha_\mathrm{decline}`
+         - Positive post-peak power-law decline index.
+    """
+
+    _LIGHTCURVE_TYPE = "bolometric"
+
+    _DEFAULT_PARAMETERS: ClassVar[dict[str, Parameter]] = {
+        "amplitude": Parameter(
+            prior=LogNormalPrior(mean=0.0, sigma=0.5),
+            scale=1e43 * _BOL_LUM_UNIT,
+            description="Peak bolometric luminosity.",
+            latex=r"A",
+        ),
+        "t_peak": Parameter(
+            prior=LogNormalPrior(mean=0.0, sigma=0.5),
+            scale=5.0 * u.day,
+            description="Time of peak luminosity since explosion.",
+            latex=r"t_\mathrm{peak}",
+        ),
+        "sigma_rise": Parameter(
+            prior=LogNormalPrior(mean=0.0, sigma=0.5),
+            scale=1.0 * u.day,
+            description="Gaussian width of the rise.",
+            latex=r"\sigma_\mathrm{rise}",
+        ),
+        "decline_index": Parameter(
+            prior=LogNormalPrior(mean=0.0, sigma=0.5),
+            scale=1.5 * u.dimensionless_unscaled,
+            description="Positive post-peak power-law decline index.",
+            latex=r"\alpha_\mathrm{decline}",
+        ),
+    }
+
+    # Narrowing `**parameters` to this model's own named parameters (rather
+    # than matching the base class's generic `**parameters` exactly) is the
+    # intended pattern for every `_eval` override -- see `Lightcurve._eval`.
+    @classmethod
+    def _eval(  # type: ignore[override]
+        cls,
+        t: NDArray[np.float64],
+        *,
+        amplitude: CGSParameterValue,
+        t_peak: CGSParameterValue,
+        sigma_rise: CGSParameterValue,
+        decline_index: CGSParameterValue,
+    ) -> NDArray[np.float64]:
+        log_rise = -0.5 * ((t - t_peak) / sigma_rise) ** 2
+
+        # `t_peak` is strictly positive (its prior's support excludes 0), so
+        # `t = 0` always falls on the rising branch -- the `log(0) = -inf`
+        # this produces on the discarded decline branch is a harmless
+        # masked-out value, not an error, exactly as in `FREDLightcurve._eval`.
+        with np.errstate(divide="ignore"):
+            log_decline = -decline_index * np.log(t / t_peak)
+
+        return np.log(amplitude) + np.where(t <= t_peak, log_rise, log_decline)
 
 
 class BazinLightcurve(Lightcurve):

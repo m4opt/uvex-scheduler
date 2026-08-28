@@ -4,6 +4,7 @@ Spectral modeling infrastructure for generating synthetic photometry.
 
 __all__ = [
     "core",
+    "lfbots",
     "lightcurves",
     "spectra",
     "supernovae",
@@ -39,3 +40,9 @@ from . import tdes
 from .tdes import *
 
 __all__.extend(tdes.__all__)
+
+# Imports from the lfbots submodule.
+from . import lfbots
+from .lfbots import *
+
+__all__.extend(lfbots.__all__)

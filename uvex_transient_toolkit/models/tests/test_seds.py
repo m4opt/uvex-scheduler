@@ -1,6 +1,6 @@
 """
-Tests for the composite SED models in :mod:`uvex_transient_toolkit.models.supernovae` and
-:mod:`uvex_transient_toolkit.models.tdes`.
+Tests for the composite SED models in :mod:`uvex_transient_toolkit.models.supernovae`,
+:mod:`uvex_transient_toolkit.models.tdes`, and :mod:`uvex_transient_toolkit.models.lfbots`.
 
 Each concrete :class:`~uvex_transient_toolkit.models.core._base.SpectralModel` gets a two-line
 test class inheriting the generic checks from
@@ -12,6 +12,7 @@ actually being checked.
 """
 
 from uvex_transient_toolkit.models.core._base import ComposedSpectralModel, SpectralModel
+from uvex_transient_toolkit.models.lfbots import LFBOTCoolingBlackbodySED
 from uvex_transient_toolkit.models.supernovae import (
     TopHatCCSNeSED,
     TypeIbSNeSED,
@@ -46,6 +47,10 @@ class TestTopHatCCSNeSED(SpectralModelContract):
 
 class TestVanVelzenTDESED(SpectralModelContract):
     model_class = VanVelzenTDESED
+
+
+class TestLFBOTCoolingBlackbodySED(SpectralModelContract):
+    model_class = LFBOTCoolingBlackbodySED
 
 
 def test_all_seds_covered():
