@@ -17,6 +17,7 @@ SKYBLOCKS_OUTPUTS = \
 	visualizations/expected-visits.pdf \
 	visualizations/skyblocks.pdf \
 	tables/fields.ecsv
+	tables/skyblocks.ecsv
 
 MAIN_OUTPUTS = \
 	tables/initial-survey.ecsv
@@ -43,10 +44,10 @@ $(SKYGRID_OUTPUTS) &: notebooks/skygrid.ipynb fov/bounding-rectangle.ds9 fov/ins
 $(SURVEY_FOOTPRINTS_OUTPUTS) &: notebooks/survey-footprints.ipynb survey-footprints/lmlz-deep.ds9 survey-footprints/lmlz-wide.ds9 survey-footprints/magellanic-clouds.ds9
 	jupyter execute $<
 
-$(SKYBLOCKS_OUTPUTS) &: notebooks/skyblocks.ipynb fov/inscribed-circle.ds9
+$(SKYBLOCKS_OUTPUTS) &: notebooks/skyblocks.ipynb fov/inscribed-circle.ds9 notebooks/survey.py
 	jupyter execute $<
 
-$(MAIN_OUTPUTS): notebooks/main.ipynb tables/fields.ecsv fov/inscribed-circle.ds9
+$(MAIN_OUTPUTS): notebooks/main.ipynb tables/fields.ecsv fov/inscribed-circle.ds9 tables/skyblocks.ecsv
 	jupyter execute $<
 
 $(REPORT_OUTPUTS) &: notebooks/report.ipynb tables/initial-survey.ecsv fov/inscribed-circle.ds9 fov/bounding-rectangle.ds9 fov/chips.ds9
