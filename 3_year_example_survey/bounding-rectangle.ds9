@@ -1,4 +1,0 @@
-# Region file format: DS9 astropy/regions
-global text={Bounding rectangle enclosing all chips}
-icrs
-box(0.00000000,0.00000000,3.74812718,3.66162389,0.00000000)

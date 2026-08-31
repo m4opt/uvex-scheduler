@@ -1,0 +1,23 @@
+# %ECSV 1.0
+# ---
+# datatype:
+# - {name: action, datatype: string}
+# - {name: duration, unit: d, datatype: float64}
+# - {name: fraction, unit: '%', datatype: float64, format: '%.2f'}
+# meta: !!omap
+# - __serialized_columns__:
+#     duration:
+#       __class__: astropy.units.quantity.Quantity
+#       unit: !astropy.units.Unit {unit: d}
+#       value: !astropy.table.SerializedColumn {name: duration}
+#     fraction:
+#       __class__: astropy.units.quantity.Quantity
+#       unit: !astropy.units.Unit {unit: '%'}
+#       value: !astropy.table.SerializedColumn {name: fraction}
+# schema: astropy-2.0
+action duration fraction
+downlink 37.95833333333333 5.197938748320665
+observe 343.85416666666663 47.0867063891507
+slew 42.62155160788723 5.836510593620706
+"block slack" 30.823367173678772 4.220890658681364
+"empty blocks" 275.0 37.657953610226556

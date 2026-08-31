@@ -1,4 +1,0 @@
-# Region file format: DS9 astropy/regions
-global text={Reduced inscribed circle used for increased tile overlap}
-icrs
-circle(0.00000000,0.00000000,1.37310896)

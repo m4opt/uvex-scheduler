@@ -1,0 +1,25 @@
+# %ECSV 1.0
+# ---
+# datatype:
+# - {name: category, datatype: string}
+# - {name: delivered_visits, datatype: int64}
+# - {name: required_visits, datatype: int64}
+# - {name: pct_of_total_visits, unit: '%', datatype: float64, format: '%.2f'}
+# - {name: pct_complete, unit: '%', datatype: float64, format: '%.2f'}
+# meta: !!omap
+# - __serialized_columns__:
+#     pct_complete:
+#       __class__: astropy.units.quantity.Quantity
+#       unit: &id001 !astropy.units.Unit {unit: '%'}
+#       value: !astropy.table.SerializedColumn {name: pct_complete}
+#     pct_of_total_visits:
+#       __class__: astropy.units.quantity.Quantity
+#       unit: *id001
+#       value: !astropy.table.SerializedColumn {name: pct_of_total_visits}
+# schema: astropy-2.0
+category delivered_visits required_visits pct_of_total_visits pct_complete
+ALL_SKY_BASE 12534 12534 37.97031202665859 100.0
+LMLZ_WIDE 11340 11340 34.3532262950621 100.0
+LMLZ_DEEP 7000 7000 21.205695243865495 100.0
+LMLZ_DEEP_POINTS 1200 1200 3.6352620418055133 100.0
+MC 936 936 2.8355043926083003 100.0
