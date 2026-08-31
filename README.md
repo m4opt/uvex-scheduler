@@ -35,7 +35,7 @@ regenerate any affected plots or data files (note, require GNU Make):
 
 - `notebooks/*.ipynb`: Jupyter notebooks that generate the data files below.
 - `tables/fields.ecsv`: Working field grid and block definitions
-- `tables/initial-survey.ecsv`: Reference science timeline for first 100 days
+- `tables/plan.ecsv`: Reference science timeline for a 2-year prime mission
 - `fov/chips.ds9`: Region file for detector footprint accounting for chip gaps
 - `fov/bounding-rectangle.ds9`: Region file for bounding rectangle enclosing all chips
 - `fov/inscribed-circle.ds9`: Region file for circle inscribed within the bounding rectangle

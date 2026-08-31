@@ -20,7 +20,7 @@ SKYBLOCKS_OUTPUTS = \
 	tables/skyblocks.ecsv
 
 MAIN_OUTPUTS = \
-	tables/initial-survey.ecsv
+	tables/plan.ecsv
 
 REPORT_OUTPUTS = \
 	visualizations/time-utilization.pdf \
@@ -50,5 +50,5 @@ $(SKYBLOCKS_OUTPUTS) &: notebooks/skyblocks.ipynb fov/inscribed-circle.ds9 noteb
 $(MAIN_OUTPUTS): notebooks/main.ipynb tables/fields.ecsv fov/inscribed-circle.ds9 tables/skyblocks.ecsv
 	jupyter execute $<
 
-$(REPORT_OUTPUTS) &: notebooks/report.ipynb tables/initial-survey.ecsv fov/inscribed-circle.ds9 fov/bounding-rectangle.ds9 fov/chips.ds9
+$(REPORT_OUTPUTS) &: notebooks/report.ipynb tables/plan.ecsv fov/inscribed-circle.ds9 fov/bounding-rectangle.ds9 fov/chips.ds9
 	jupyter execute $<
