@@ -1,4 +1,0 @@
-# Region file format: DS9 astropy/regions
-global text={Circle inscribed within bounding rectangle}
-icrs
-circle(0.00000000,0.00000000,1.83081195)

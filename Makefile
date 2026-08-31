@@ -24,6 +24,7 @@ all: $(SURVEY)/fov_plot.png \
      $(SURVEY)/visited-fraction.ecsv \
      $(SURVEY)/visited-area.ecsv \
      $(SURVEY)/visit-multiplicity.pdf \
+     $(SURVEY)/visit-map.pdf \
      $(SURVEY)/visited-fraction-cdf.ecsv \
      $(SURVEY)/visit-multiplicity-cdf.pdf \
      $(SURVEY)/survey-completeness.ecsv \
@@ -53,7 +54,7 @@ $(SURVEY)/expected_visits_map.pdf \
 $(SURVEY)/block_size_distribution.pdf \
 $(SURVEY)/block_partition_map.pdf \
 $(SURVEY)/fields.ecsv \
-$(SURVEY)/blocks.ecsv &: notebooks/skyblocks.ipynb $(SURVEY)/chips.ds9 $(SURVEY)/inscribed-circle.ds9 $(SURVEY)/skygrid_params.json
+$(SURVEY)/blocks.ecsv &: notebooks/skyblocks.ipynb notebooks/survey_utils.py $(SURVEY)/chips.ds9 $(SURVEY)/inscribed-circle.ds9 $(SURVEY)/skygrid_params.json
 	jupyter execute $<
 
 $(SURVEY)/downlinks.ecsv \
@@ -69,6 +70,7 @@ $(SURVEY)/weekly-usage.pdf \
 $(SURVEY)/visited-fraction.ecsv \
 $(SURVEY)/visited-area.ecsv \
 $(SURVEY)/visit-multiplicity.pdf \
+$(SURVEY)/visit-map.pdf \
 $(SURVEY)/visited-fraction-cdf.ecsv \
 $(SURVEY)/visit-multiplicity-cdf.pdf \
 $(SURVEY)/survey-completeness.ecsv \
