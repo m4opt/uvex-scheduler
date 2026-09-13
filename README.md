@@ -34,6 +34,7 @@ regenerate any affected plots or data files (note, require GNU Make):
 ## Contents
 
 - `notebooks/*.ipynb`: Jupyter notebooks that generate the data files below.
+- `notebooks/survey.py`: Survey configuration. Edit this to adjust survey footprints, required visits, cadence constraints, etc.
 - `tables/fields.ecsv`: Working field grid and block definitions
 - `tables/plan.ecsv`: Reference science timeline for a 2-year prime mission
 - `fov/chips.ds9`: Region file for detector footprint accounting for chip gaps
