@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Literal
 
 from astropy import units as u
+from m4opt.constraints import ZodiacalBackgroundConstraint
 from regions import Regions, SkyRegion
 
 
@@ -56,3 +57,6 @@ survey_programs = [
         min_cadence=10 * u.day,
     ),
 ]
+
+extra_constraints = ZodiacalBackgroundConstraint(22.25)
+"""Additional constraints applied to survey mode observations."""
