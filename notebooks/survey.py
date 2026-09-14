@@ -52,9 +52,9 @@ survey_programs = [
     SurveyProgram(
         name="mc",
         region=Regions.read("../survey-footprints/magellanic-clouds.ds9"),
-        visits=52,
+        visits=50,
         mode="block",
-        min_cadence=10 * u.day,
+        min_cadence=14 * u.day,
     ),
 ]
 
