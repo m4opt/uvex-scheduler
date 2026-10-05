@@ -24,10 +24,18 @@
 4.  Install CPLEX inside the project's uv virtual environment by following
     [M4OPT's instructions to install CPLEX].
 
-## To rerun
+## To run
 
-After editing any of the Juptyer notebooks, run the following command to
-regenerate any affected plots or data files (note, require GNU Make):
+Run the following Jupyter notebooks, in order. To run a notebook interactively from your command line environment, just run `uv run jupyter execute path/to/notebook.ipynb`.
+
+1.  [notebooks/fov.ipynb](notebooks/fov.ipynb): This saves the UVEX field of view geometry to region files in the [fov](fov) directory. It also generates some visualizations of the field of view.
+2. [notebooks/skygrid.ipynb](notebooks/skygrid.ipynb): This generates some visualizations of the sky grid, including evaluating the sky coverage fraction.
+3. [notebooks/survey-footprints.ipynb](notebooks/survey-footprints.ipynb): This generates a visualization of the survey footprint regions defined in the [survey-footprints](survey-footprints) directory.
+4. [notebooks/skyblocks.ipynb](notebooks/skyblocks.ipynb): This groups the sky grid fields into blocks, assigns each block to a survey, and saves the field and block tables. It also generates visualizations of the expected number of visits and the sky blocks.
+5. [notebooks/main.ipynb](notebooks/main.ipynb): This runs the scheduler to produce the reference science timeline.
+6. [notebooks/report.ipynb](notebooks/report.ipynb): This generates summary visualizations of the schedule, including time utilization, cadence, sky coverage, and slew angle distributions.
+
+Or, to run all of the notebooks automatically, you can run the following single command (note, require GNU Make):
 
     uv run make
 
