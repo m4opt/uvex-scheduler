@@ -3,7 +3,29 @@ from typing import Literal
 
 from astropy import units as u
 from m4opt.constraints import ZodiacalBackgroundConstraint
+from m4opt.missions import Mission, uvex
+from m4opt.synphot import Detector
 from regions import Regions, SkyRegion
+
+mission = Mission(
+    name=uvex.name,
+    fov=uvex.fov,
+    constraints=uvex.constraints,
+    observer_location=uvex.observer_location,
+    slew=uvex.slew,
+    skygrid=uvex.skygrid,
+    detector=Detector(
+        plate_scale=uvex.detector.plate_scale,
+        bandpasses=uvex.detector.bandpasses,
+        background=uvex.detector.background,
+        dark_noise=uvex.detector.dark_noise,
+        read_noise=uvex.detector.read_noise,
+        npix=uvex.detector.npix,
+        aperture_correction=uvex.detector.aperture_correction,
+        gain=uvex.detector.gain,
+    ),
+)
+"""Mission configuration."""
 
 
 @dataclass

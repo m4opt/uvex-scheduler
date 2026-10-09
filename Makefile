@@ -43,10 +43,10 @@ ANIMATE_OUTPUTS = \
 
 all: $(FOV_OUTPUTS) $(SKYGRID_OUTPUTS) $(SURVEY_FOOTPRINTS_OUTPUTS) $(SKYBLOCKS_OUTPUTS) $(MAIN_OUTPUTS) $(REPORT_OUTPUTS) $(ANIMATE_OUTPUTS)
 
-$(FOV_OUTPUTS) &: notebooks/fov.ipynb
+$(FOV_OUTPUTS) &: notebooks/fov.ipynb notebooks/survey.py
 	jupyter execute $<
 
-$(SKYGRID_OUTPUTS) &: notebooks/skygrid.ipynb fov/bounding-rectangle.ds9 fov/inscribed-circle.ds9
+$(SKYGRID_OUTPUTS) &: notebooks/skygrid.ipynb notebooks/survey.py fov/bounding-rectangle.ds9 fov/inscribed-circle.ds9
 	jupyter execute $<
 
 $(SURVEY_FOOTPRINTS_OUTPUTS) &: notebooks/survey-footprints.ipynb survey-footprints/lmlz-deep.ds9 survey-footprints/lmlz-wide.ds9 survey-footprints/magellanic-clouds.ds9
