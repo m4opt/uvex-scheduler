@@ -16,6 +16,7 @@ mission = Mission(
     skygrid=uvex.skygrid,
     detector=Detector(
         plate_scale=uvex.detector.plate_scale,
+        area=uvex.detector.area,
         bandpasses=uvex.detector.bandpasses,
         background=uvex.detector.background,
         dark_noise=uvex.detector.dark_noise,
