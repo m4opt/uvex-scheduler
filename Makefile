@@ -37,11 +37,6 @@ REPORT_OUTPUTS = \
 	visualizations/cadence-distribution-4-bins.pdf \
 	visualizations/cadence-distribution-40-bins.pdf \
 	visualizations/cadence-distribution-8-bins.pdf \
-	visualizations/cadence-distribution-no-repeats-2-bins.pdf \
-	visualizations/cadence-distribution-no-repeats-20-bins.pdf \
-	visualizations/cadence-distribution-no-repeats-4-bins.pdf \
-	visualizations/cadence-distribution-no-repeats-40-bins.pdf \
-	visualizations/cadence-distribution-no-repeats-8-bins.pdf \
 	visualizations/slew-angle-distribution.pdf
 
 ANIMATE_OUTPUTS = \
