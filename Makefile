@@ -20,7 +20,6 @@ SKYBLOCKS_OUTPUTS = \
 	tables/skyblocks.ecsv
 
 MAIN_OUTPUTS = \
-	tables/downlinks.ecsv \
 	tables/plan.ecsv \
 	visualizations/sequence.pdf
 
