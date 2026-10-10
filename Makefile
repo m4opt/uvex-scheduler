@@ -31,11 +31,7 @@ REPORT_OUTPUTS = \
 	visualizations/time-utilization.pdf \
 	visualizations/visit-distribution.pdf \
 	visualizations/visit-map.pdf \
-	visualizations/cadence-distribution-2-bins.pdf \
-	visualizations/cadence-distribution-20-bins.pdf \
-	visualizations/cadence-distribution-4-bins.pdf \
-	visualizations/cadence-distribution-40-bins.pdf \
-	visualizations/cadence-distribution-8-bins.pdf \
+	visualizations/cadence-distribution.pdf \
 	visualizations/slew-angle-distribution.pdf
 
 ANIMATE_OUTPUTS = \

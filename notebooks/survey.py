@@ -7,6 +7,8 @@ from m4opt.missions import Mission, uvex
 from m4opt.synphot import Detector
 from regions import Regions, SkyRegion
 
+__all__ = ("extra_constraints", "mission", "survey_programs")
+
 mission = Mission(
     name=uvex.name,
     fov=uvex.fov,
