@@ -66,7 +66,7 @@ survey_programs = [
         visits=10,
         max_visits=50,
         mode="block",
-        min_cadence=2 * u.day,
+        min_cadence=1 * u.day,
     ),
     SurveyProgram(
         name="lmlz_deep",
