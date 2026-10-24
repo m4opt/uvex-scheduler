@@ -1496,6 +1496,7 @@ dependencies = [
     { name = "typer" },
     { name = "xdg-base-dirs" },
 ]
+sdist = { url = "https://files.pythonhosted.org/packages/f5/1b/2de766d33a60c058f9e9a158d14536f08df191776dc35830f7080ba6f511/m4opt-4.0.0.tar.gz", hash = "sha256:bb47f5f6e5ca94da9b658bfb254d91f1ad6d9c2f5f29761a48b3ec62e396b52e", size = 1911430, upload-time = "2026-10-09T20:35:36.814Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/00/c5/31715a804f1b1df2a1a623124aa97e141ccd63f5f86952f9b4dd6b29c9aa/m4opt-4.0.0-cp312-abi3-macosx_14_0_arm64.whl", hash = "sha256:a361e5e946c2919cee9819da16446ad7452342ad04c6912eac6ad88250583cd0", size = 1905677, upload-time = "2026-10-09T20:29:45.626Z" },
     { url = "https://files.pythonhosted.org/packages/12/2f/8115a3b7e99bbfb88b584651c8862ff0c3b438977ca8723d7b15bb02b07b/m4opt-4.0.0-cp312-abi3-macosx_15_0_x86_64.whl", hash = "sha256:4cf9daa0e869714198816d536869c93336def5b3a16a8e7b0e77794f933122e9", size = 1932230, upload-time = "2026-10-09T20:29:48.55Z" },
@@ -1504,6 +1505,11 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/f3/c7/63e41b5bd78dd68d587049f0e426def9c9844d9a7c7d500dde2f7545a8fe/m4opt-4.0.0-cp312-abi3-musllinux_1_2_aarch64.whl", hash = "sha256:e0448e624c9f301d0d89bdd30653b5972d0ddba88619fee77c8f96e9b6819b0c", size = 1819951, upload-time = "2026-10-09T20:29:54.197Z" },
     { url = "https://files.pythonhosted.org/packages/33/8e/7b1eb0f19e77620a44e8a17f3ee9595a5b7d71b02c88ac683c50aa500763/m4opt-4.0.0-cp312-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:9be0b713141a259f41b548c326b2856ac610ad19d01ed7800defcc7b934aaf9f", size = 1822009, upload-time = "2026-10-09T20:29:55.901Z" },
     { url = "https://files.pythonhosted.org/packages/11/cd/e4b25def9241b43a0bfe8597a580570ab75b7767390a422e687c3484dd9c/m4opt-4.0.0-cp314-cp314t-macosx_14_0_arm64.whl", hash = "sha256:fdbef6f11327b1a951fd51a227dcb9c9638c1b783c7f8ef9d3475a9eda4e72b6", size = 1906098, upload-time = "2026-10-09T20:29:58.587Z" },
+    { url = "https://files.pythonhosted.org/packages/b9/e5/59edd49b4e55030f14bc37aa727c57515a650a01bcc2b7b4ef4361172774/m4opt-4.0.0-cp314-cp314t-macosx_15_0_x86_64.whl", hash = "sha256:5b0f075fae5bf5a73f8cab62511f919bcf8cf65899093e4d033ea1c6c3136f8c", size = 1932645, upload-time = "2026-10-09T20:35:17.582Z" },
+    { url = "https://files.pythonhosted.org/packages/57/95/832663b441dd8866d4e497af95824f5557fa5789bbe853e9b23fc5abdb81/m4opt-4.0.0-cp314-cp314t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:b0f6a8b4ab51b47256c33bbe45c4635b627da36a610730e9c6e507e7574549c9", size = 1793324, upload-time = "2026-10-09T20:35:27.72Z" },
+    { url = "https://files.pythonhosted.org/packages/3d/7a/5709c2493189920b3b7cd410f1e15b31bfe361aed0baed5976d3730f17c4/m4opt-4.0.0-cp314-cp314t-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:531c86ef0fe38c0f1518945bc7eb6267d5150ef1e5f23372614fe74f926436a8", size = 1795784, upload-time = "2026-10-09T20:35:29.875Z" },
+    { url = "https://files.pythonhosted.org/packages/64/3b/97869d62c7cc3e56f184f787f3a3e86a565fcd10710c61cea05571134201/m4opt-4.0.0-cp314-cp314t-musllinux_1_2_aarch64.whl", hash = "sha256:007e127bf67fccf2b60ecac4cb3058ab8c6ce5ed683016c1a985ae914f13e75b", size = 1829363, upload-time = "2026-10-09T20:35:32.685Z" },
+    { url = "https://files.pythonhosted.org/packages/59/fd/e86b86b83f35af10697574a492f3a16490b09d1afc5dbb884e835e88f287/m4opt-4.0.0-cp314-cp314t-musllinux_1_2_x86_64.whl", hash = "sha256:d4ead332c60a1e82f2f3bbc88359dfff408263fefff70b8072dec6d0c0ae711d", size = 1831175, upload-time = "2026-10-09T20:35:34.716Z" },
 ]
 
 [[package]]
@@ -1646,7 +1652,7 @@ wheels = [
 
 [[package]]
 name = "nbconvert"
-version = "7.17.1"
+version = "7.17.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -1664,9 +1670,9 @@ dependencies = [
     { name = "pygments" },
     { name = "traitlets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/01/b1/708e53fe2e429c103c6e6e159106bcf0357ac41aa4c28772bd8402339051/nbconvert-7.17.1.tar.gz", hash = "sha256:34d0d0a7e73ce3cbab6c5aae8f4f468797280b01fd8bd2ca746da8569eddd7d2", size = 865311, upload-time = "2026-04-08T00:44:14.914Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/53/6a/252c7620305a9661205aed7a2a4b3592f5207bfca56ad11b7dea2c5ec2f6/nbconvert-7.17.2.tar.gz", hash = "sha256:344a218e8595117ce37396ed025d994f146d076226ebac59255a2fa085ab24d8", size = 865989, upload-time = "2026-10-12T09:11:19.583Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/67/f8/bb0a9d5f46819c821dc1f004aa2cc29b1d91453297dbf5ff20470f00f193/nbconvert-7.17.1-py3-none-any.whl", hash = "sha256:aa85c087b435e7bf1ffd03319f658e285f2b89eccab33bc1ba7025495ab3e7c8", size = 261927, upload-time = "2026-04-08T00:44:12.845Z" },
+    { url = "https://files.pythonhosted.org/packages/81/fd/a8d457af68848a8e5c12dd1d84ff35c415db471af78280e0703db4efbb12/nbconvert-7.17.2-py3-none-any.whl", hash = "sha256:6a143c11c00bf831604da4b1be4347d36ea52367057eb920135d69bc2862fed2", size = 262094, upload-time = "2026-10-12T09:11:17.215Z" },
 ]
 
 [[package]]
